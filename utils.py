@@ -2,12 +2,19 @@ import re
 import wordninja
 from typing import List
 
-PUNCTUATIONS_SET: str = r'[.!?;,:]'
+PUNCTUATIONS_PATTERN = re.compile(r'[.!?;,:]')
 
 
-def correct_text(sentence: str) -> str:
-    punctuations: List[str] = [x for x in sentence if re.match(PUNCTUATIONS_SET, x)]
-    sub_sentences: List[str] = re.split(PUNCTUATIONS_SET, sentence)
+def correct_text(text: str) -> str:
+    punctuations: List[str] = []
+    sub_sentences: List[str] = []
+    prev_index: int = 0
+    for match in PUNCTUATIONS_PATTERN.finditer(text):
+        end_index: int = match.end()
+        punctuations.append(text[end_index - 1])
+        sub_sentences.append(text[prev_index:end_index - 1].strip())
+        prev_index = end_index
+
     corrected_sub_sentences: List[str] = [' '.join(wordninja.split(x)) for x in sub_sentences]
 
     corrected_sentence: List[str] = []
