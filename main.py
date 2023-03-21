@@ -20,5 +20,10 @@ def handle_post_request() -> Dict[str, str]:
     return response
 
 
+@app.route('/healthcheck')
+def healthcheck() -> Dict[str, str]:
+    return {'status': 'ok'}
+
+
 if __name__ == '__main__':
     app.run()
