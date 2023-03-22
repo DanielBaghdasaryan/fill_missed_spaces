@@ -30,7 +30,7 @@ def correct_text(text: str) -> Tuple[str, List[int]]:
         elif len(sentence) > 0:
             corrected_sentences.append(sentence)
 
-    corrected_text: str = ''.join(corrected_sentences)
+    corrected_text: str = ''.join(corrected_sentences).strip()
     return corrected_text, find_missed_space_indexes(text, corrected_text)
 
 
