@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import re
+import sys
 from utils import correct_text
 from typing import Dict, List, Tuple, Any
 
@@ -38,4 +39,10 @@ def healthcheck() -> Tuple[Dict[str, Any], int]:
 
 
 if __name__ == '__main__':
-    app.run()
+    port: int = 5000
+    if len(sys.argv) > 1:
+        try:
+            port = int(sys.argv[1])
+        except ValueError:
+            print(f"\n * Value {sys.argv[1]} is not a valid value for the port, running on default port: 5000\n")
+    app.run(port=port)
